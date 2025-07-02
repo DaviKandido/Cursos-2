@@ -13,7 +13,7 @@ function save (req, res) {
    models.Post.create(post).then(result => {
         res.status(201).json({
             message: "Created Post successfully",
-            post: result
+            post: post
         })
    }).catch(error => {
         res.status(500).json({
@@ -66,7 +66,7 @@ function update(req,res){
     }).then(result => {
         res.status(200).json({
             menssage: "Updated Post successfully",
-            post: result
+            post: updatePost
         })
     }).catch(error => {
         res.status(500).json({
