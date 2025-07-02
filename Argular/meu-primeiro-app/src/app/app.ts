@@ -10,4 +10,8 @@ import { HomeComponent } from "./components/home/home";
 })
 export class App {
   protected title = 'meu-primeiro-app';
+
+  logar(name: string) {
+    console.log("nome vindo do output:" , name);
+  }
 }

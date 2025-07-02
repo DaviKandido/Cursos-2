@@ -9,6 +9,17 @@
   <h1>Erro</h1>
 }
 
+<h2>Teste de props externa: {{minhaPropsDeFora}}</h2>
+<h2>Teste de props externa: {{teste}}</h2>
+
+
+<p *ngFor="let item of listItem">{{item}}</p>
+
+<!-- Trach é como se fosse um hash sobre o proprio item -->
+@for(item of listItem; track item){
+  <p>{{item}}</p>
+}
+
 <p>home works! {{name}}</p>
 
 <button [attr.aria-label]="name"></button> <br>
