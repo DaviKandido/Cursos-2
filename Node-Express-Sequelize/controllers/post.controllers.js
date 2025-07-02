@@ -61,7 +61,7 @@ function update(req,res){
     models.Post.update(updatePost, {
         where: {
             id: id,
-            userId: post.userId
+            userId: updatePost.userId
         }
     }).then(result => {
         res.status(200).json({
