@@ -1,0 +1,23 @@
+
+<h1 *ngIf="deveMostrarTitulo">Esse é o meu site</h1>
+
+@if(deveMostrarTitulo){
+  <h1>Esse é o meu site</h1>
+}@else if(name == "Davi"){
+  <h1>Ola, {{name}}</h1>
+}@else{
+  <h1>Erro</h1>
+}
+
+<p>home works! {{name}}</p>
+
+<button [attr.aria-label]="name"></button> <br>
+<button [id]="name"></button> <br>
+<button id={{name}}></button> <br>
+
+<button [attr.teste-meu]="name"></button> <br>
+
+
+<button (click)="submit($event)">submit name</button> <br>
+
+
