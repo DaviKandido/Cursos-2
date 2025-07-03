@@ -12,12 +12,15 @@ function save (req, res) {
 
    models.Post.create(post).then(result => {
         res.status(201).json({
-            message: "Created Post successfully",
-            post: post
+            message: "Created Post successfully!",
+            post: {
+                   id: result.id, 
+                   ...post
+                }
         })
    }).catch(error => {
         res.status(500).json({
-            message: "Something went wrong",
+            message: "Something went wrong!",
             error: error
         })
    })
@@ -28,7 +31,7 @@ function index(req, res){
         res.status(200).json(result)
     }).catch(error => {
         res.send(500).json({
-            message: "Something went wrong",
+            message: "Something went wrong!",
             error: error
         })
     })
@@ -39,10 +42,16 @@ function show(req, res){
     const id = req.params.id;
 
     models.Post.findByPk(id).then(result => {
-        res.status(200).json(result)
+        if(result){
+            res.status(200).json(result)
+        }else{
+            res.status(404).json({
+                message: "Post not found!"
+           })
+        }
     }).catch(error => {
         res.status(500).json({
-            message: "Something went wrong",
+            message: "Something went wrong!",
             error: error
         })
     })
@@ -65,12 +74,36 @@ function update(req,res){
         }
     }).then(result => {
         res.status(200).json({
-            menssage: "Updated Post successfully",
-            post: updatePost
+            menssage: "Updated Post successfully!",
+            post: {
+                    id: Number(id),
+                    ...updatePost
+                  }
         })
     }).catch(error => {
         res.status(500).json({
-            message: "Something went wrong",
+            message: "Something went wrong!",
+            error: error
+        })
+    })
+}
+
+function destroy(req, res){
+    const id = req.params.id;
+    const userId = req.params.user_id
+
+    models.Post.destroy({
+        where: {
+            id: id,
+            userId: userId
+        }
+    }).then(result => {
+        res.status(200).json({
+            message: "Deleted Post successfully!"
+        })
+    }).catch(error => {
+        res.status(500).json({
+            message: "Something went wrong!",
             error: error
         })
     })
@@ -80,5 +113,6 @@ module.exports = {
     save: save,
     show: show,
     index: index,
-    update: update
+    update: update,
+    destroy: destroy
 }
