@@ -1,4 +1,5 @@
-const models = require("../models")
+const models = require("../models") 
+const Validator = require("fastest-validator")
 
 // era padrão que o user_id sempre fosse 1, alterei para ser dinamico
 function save (req, res) {
@@ -9,6 +10,22 @@ function save (req, res) {
         categoryId: req.body.category_id,
         userId: req.body.user_id
    }
+
+    const schema = {
+        title: {type: "string", opitional: false, max: "100"},
+        content: {type: "string", opitional: false, max: "500"},
+        categoryId: {type: "number", opitional: false}
+    }
+
+    const v = new Validator();
+    const validationResponse = v.validate(post, schema)
+
+    if(validationResponse !== true){
+        return res.status(400).json({
+            message: "Validation fails!",
+            errors: validationResponse
+        })
+    }
 
    models.Post.create(post).then(result => {
         res.status(201).json({
@@ -67,6 +84,22 @@ function update(req,res){
         userId: req.body.user_id
     }
 
+    const schema = {
+        title: {type: "string", opitional: false, max: "100"},
+        content: {type: "string", opitional: false, max: "500"},
+        categoryId: {type: "number", opitional: false}
+    }
+
+    const v = new Validator();
+    const validationResponse = v.validate(updatePost, schema)
+
+    if(validationResponse !== true){
+        return res.status(400).json({
+            message: "Validation fails!",
+            errors: validationResponse
+        })
+    }
+
     models.Post.update(updatePost, {
         where: {
             id: id,
@@ -90,12 +123,10 @@ function update(req,res){
 
 function destroy(req, res){
     const id = req.params.id;
-    const userId = req.params.user_id
 
     models.Post.destroy({
         where: {
             id: id,
-            userId: userId
         }
     }).then(result => {
         res.status(200).json({
