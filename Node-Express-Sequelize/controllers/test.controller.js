@@ -8,18 +8,18 @@ async function test(req, res){
 
 
     //one to one
-    // const user = await models.User.findByPk(1, {
-    //     include: [models.Address]
-    // });
+    const user = await models.User.findByPk(1, {
+        include: [models.Address]
+    });
 
-    // const adress = await models.Address.findByPk(1, {
-    //     include: [models.User]
-    // })
+    const adress = await models.Address.findByPk(1, {
+        include: [models.User]
+    })
 
     //One to many
-    const user = await models.User.findByPk(1, {
-        include: [models.Post]
-    });
+    // const user = await models.User.findByPk(1, {
+    //     include: [models.Post]
+    // });
 
     //Many to many
     const post = await models.Post.findByPk(1, {
@@ -30,8 +30,12 @@ async function test(req, res){
         include: [models.Post]
     })
 
+    const Comment = await models.Comment.findByPk(1, {
+        include: [models.Post, models.User]
+    })
+
     res.status(200).json({
-        data: Category
+        data: Comment
     });
 }
 
