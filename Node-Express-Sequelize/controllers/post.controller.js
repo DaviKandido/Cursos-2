@@ -8,7 +8,7 @@ function save (req, res) {
         content: req.body.content,
         imageUrl: req.body.image_url,
         categoryId: req.body.category_id,
-        userId: req.body.user_id
+        userId: req.userData.userId
    }
 
     const schema = {
@@ -68,7 +68,9 @@ function index(req, res){
 function show(req, res){
     const id = req.params.id;
 
-    models.Post.findByPk(id).then(result => {
+    models.Post.findByPk(id, {
+        include: [models.User, models.Category,]
+    }).then(result => {
         if(result){
             res.status(200).json(result)
         }else{
@@ -91,7 +93,7 @@ function update(req,res){
         content: req.body.content,
         imageUrl: req.body.image_url,
         categoryId: req.body.category_id,
-        userId: req.body.user_id
+        userId: req.userData.userId
     }
 
     const schema = {
@@ -144,10 +146,12 @@ function update(req,res){
 
 function destroy(req, res){
     const id = req.params.id;
+    const userId = req.userData.userId
 
     models.Post.destroy({
         where: {
             id: id,
+            userId: userId
         }
     }).then(result => {
         res.status(200).json({
