@@ -1,11 +1,11 @@
-import { JsonPipe } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';''
 import { Department } from '../../models/department.model';
 
 
 @Component({
-  imports: [FormsModule, JsonPipe],
+  imports: [FormsModule, JsonPipe, CommonModule],
   selector: 'app-create-employee',
   templateUrl: './create-employee.html',
   styleUrl: './create-employee.scss',
@@ -22,6 +22,8 @@ export class CreateEmployee {
   dateOfBirth!: Date;
   photoPath!: File;
 
+  previewPhoto: boolean = false;
+
   departments: Department[] = [
     { id: 1, name: 'Help Desk' },
     { id: 2, name: 'HR' },
@@ -33,4 +35,7 @@ export class CreateEmployee {
     console.log(empForm.value);
   }
 
+  togglePhotoPreview(){
+    this.previewPhoto = !this.previewPhoto;
+  }
 }
