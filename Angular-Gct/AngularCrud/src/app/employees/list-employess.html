@@ -1,0 +1,25 @@
+
+@for (employee of employees; track $index) {
+<div class="card mb-3 border-primary">
+  <div class="card-header bg-primary text-white">
+    {{ employee.name }}
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <img [src]="employee.photoPath" class="imageClass" alt="Foto">
+      </div>
+      <div class="col-md-8">
+        <p><strong>Gender:</strong> {{ employee.gender }}</p>
+        <p><strong>Contact:</strong> {{ employee.contactPreference }}</p>
+        <p *ngIf="employee.email"><strong>Email:</strong> {{ employee.email }}</p>
+        <p *ngIf="employee.phoneNumber"><strong>Phone:</strong> {{ employee.phoneNumber }}</p>
+        <p><strong>Birthdate:</strong> {{ employee.dateOfBirth | date:'dd/MM/yyyy' }}</p>
+        <p><strong>Department:</strong> {{ employee.department }}</p>
+        <p><strong>Active:</strong> {{ employee.isActive }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+}

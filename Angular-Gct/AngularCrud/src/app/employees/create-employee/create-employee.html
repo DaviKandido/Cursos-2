@@ -1,0 +1,92 @@
+<form #employeeForm="ngForm"  (ngSubmit)="saveEmployee(employeeForm)">
+  <div class="card mb-3 border-primary">
+    <div class="card-header bg-primary text-white">
+      Create Employee
+    </div>
+
+      <div class="card-body">
+          <div class="mb-3">
+            <label for="fullName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" name="fullName" id="fullName" [(ngModel)]="fullName" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="email" >
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="phoneNumber" class="form-label">phoneNumber</label>
+            <input type="tel" name="phoneNumber" class="form-control" id="phoneNumber" [(ngModel)]="phoneNumber">
+          </div>
+
+          <div class="mb-3">
+            <label for="M" class="form-label">ContactPreference</label>
+            <div class="form-control">
+              <label class="me-4">
+                <input type="radio" value="email" name="contactPreference" [(ngModel)]="contactPreference">
+                  Email
+              </label>
+              <label>
+                <input type="radio" value="phone" name="contactPreference" [(ngModel)]="contactPreference">
+                  Phone
+              </label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="M" class="form-label">Gender</label>
+            <div class="form-control">
+              <label class="me-4">
+                <input type="radio" value="male" name="gender" [(ngModel)]="gender" required>
+                  Male
+              </label>
+              <label>
+                <input type="radio" value="famale" name="gender" [(ngModel)]="gender" required>
+                  Famale
+              </label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="form-control">
+              <label class="form-check-inline">
+                <input type="checkbox" value="isActive" name="isActive" [(ngModel)]="isActive" required>
+                  Is Active
+              </label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+              <label for="department">
+                Department
+              </label>
+              <select id="department" name="department" [(ngModel)]="department" class="form-control">
+                @for(dep of departments; track $index) {
+                  <option value={{dep.id}}>{{dep.name}}</option>
+                }
+              </select>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-md-5">
+              <label for="phoneNumber" class="form-label">Date of Birth</label>
+              <input type="Date" bsDatepicker name="dateOfBirth" class="form-control" id="dateOfBirth" [(ngModel)]="dateOfBirth" placeholder="dd/MM/yyyy">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="photoPath" class="form-label">Photo Path</label>
+            <input type="file" accept="image/*" name="photoPath" class="form-control" id="photoPath" [(ngModel)]="photoPath">
+          </div>
+
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+
+</form>
+
+{{employeeForm.value | json}}
