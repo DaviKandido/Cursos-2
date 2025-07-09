@@ -1,128 +1,291 @@
-<form #employeeForm="ngForm" ngNativeValidate (ngSubmit)="saveEmployee(employeeForm)">
+<form
+  #employeeForm="ngForm"
+  ngNativeValidate
+  (ngSubmit)="saveEmployee(employee)"
+>
   <div class="card mb-3 border-primary">
-    <div class="card-header bg-primary text-white">
-      Create Employee
-    </div>
+    <div class="card-header bg-primary text-white">Create Employee</div>
 
-      <div class="card-body">
-          <div class="mb-3 has-validation">
-            <label for="fullName" class="form-label">Full Name</label>
-            <input type="text" class="form-control" name="fullName" id="fullName" [(ngModel)]="fullName" required
-              #fullNameControl="ngModel"
-              aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback"
-              [class.is-invalid]="fullNameControl.invalid && fullNameControl.touched"
-              [class.is-valid]="fullNameControl.valid"
-            >
-            <span class="invalid-feedback"
-                  *ngIf="fullNameControl.invalid"
-            >
-              Full Name is required
-            </span>
-          </div>
+    <div class="card-body">
+      <div class="mb-3 has-validation">
+        <label for="name" class="form-label">Full Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          id="name"
+          [(ngModel)]="employee.name"
+          required
+          #name="ngModel"
+          aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback"
+          [class.is-invalid]="name.invalid && name.touched"
+          [class.is-valid]="name.valid && name.touched"
+          pattern="^[a-zA-ZÀ-ÿ\s]+$"
+        />
 
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="email" required
-              #emailControl="ngModel"
-              [class.is-invalid]="emailControl.invalid && emailControl.touched"
-              >
-              <span class="invalid-feedback"
-                    *ngIf="emailControl.invalid">
-                    Email is required
-                </span>
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-          </div>
+        <span class="invalid-feedback" *ngIf="name.errors?.['required']">
+          Name is required
+        </span>
+        <span class="invalid-feedback" *ngIf="name.errors?.['pattern']">
+          Name is invalid
+        </span>
+      </div>
 
-          <div class="mb-3">
-            <label for="phoneNumber" class="form-label">Phone Number</label>
-            <input type="tel" name="phoneNumber" class="form-control" id="phoneNumber" [(ngModel)]="phoneNumber">
-          </div>
+      <div class="mb-3">
+        <label for="M" class="form-label">Contact Preference</label>
+        <div
+          class="form-control"
+          [class.is-invalid]="
+            contactPreference.invalid && contactPreference.touched
+          "
+        >
+          <label class="me-4">
+            <input
+              type="radio"
+              value="email"
+              name="contactPreference"
+              [(ngModel)]="employee.contactPreference"
+              required
+              #contactPreference="ngModel"
+            />
+            Email
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="phone"
+              name="contactPreference"
+              [(ngModel)]="employee.contactPreference"
+              required
+              #contactPreference="ngModel"
+            />
+            Phone
+          </label>
+        </div>
 
-          <div class="mb-3">
-            <label for="M" class="form-label">ContactPreference</label>
-            <div class="form-control">
-              <label class="me-4">
-                <input type="radio" value="email" name="contactPreference" [(ngModel)]="contactPreference">
-                  Email
-              </label>
-              <label>
-                <input type="radio" value="phone" name="contactPreference" [(ngModel)]="contactPreference">
-                  Phone
-              </label>
-            </div>
-          </div>
+        <span
+          class="invalid-feedback d-block"
+          *ngIf="contactPreference.errors?.['required'] && contactPreference.touched"
+        >
+          Contact Preference is required
+        </span>
+      </div>
 
-          <div class="mb-3">
-            <label for="M" class="form-label">Gender</label>
-            <div class="form-control">
-              <label class="me-4">
-                <input type="radio" value="male" name="gender" [(ngModel)]="gender" required>
-                  Male
-              </label>
-              <label>
-                <input type="radio" value="famale" name="gender" [(ngModel)]="gender" required>
-                  Famale
-              </label>
-            </div>
-          </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email</label>
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          [(ngModel)]="employee.email"
+          [required]="employee.contactPreference === 'email'"
+          email
+          #email="ngModel"
+          [class.is-invalid]="email.invalid"
+          [class.is-valid]="email.valid && phoneNumber.touched"
+        />
 
-          <div class="mb-3">
-            <div class="form-control">
-              <label class="form-check-inline">
-                <input type="checkbox" value="isActive" name="isActive" [(ngModel)]="isActive" required>
-                  Is Active
-              </label>
-            </div>
-          </div>
+        <!-- Mensagem se o campo estiver vazio -->
+        <span
+          class="invalid-feedback d-block"
+          *ngIf="email.errors?.['required']"
+        >
+          email is required
+        </span>
 
-          <div class="mb-3">
-              <label for="department">
-                Department
-              </label>
-              <select id="department" name="department" [(ngModel)]="department" class="form-control">
-                @for(dep of departments; track $index) {
-                  <option value={{dep.id}}>{{dep.name}}</option>
-                }
-              </select>
-          </div>
+        <!-- Mensagem se o campo tiver um formato inválido -->
+        <span class="invalid-feedback d-block" *ngIf="email.errors?.['email']">
+          Email is invalid
+        </span>
 
-          <div class="row">
-            <div class="mb-3 col-md-5">
-              <label for="phoneNumber" class="form-label">Date of Birth</label>
-              <input type="Date" bsDatepicker name="dateOfBirth" class="form-control" id="dateOfBirth" [(ngModel)]="dateOfBirth" placeholder="dd/MM/yyyy">
-            </div>
-          </div>
+        <div id="emailHelp" class="form-text">
+          We'll never share your email with anyone else.
+        </div>
+      </div>
 
-          <div class="mb-3 col-md-4">
-            <label for="photoPath" class="form-label">Photo Path</label>
-            <input type="file" accept="image/*" name="photoPath" class="form-control" id="photoPath" [(ngModel)]="photoPath">
-          </div>
+      <div class="mb-3">
+        <label for="phoneNumber" class="form-label">Phone Number</label>
+        <input
+          type="tel"
+          name="phoneNumber"
+          class="form-control"
+          id="phoneNumber"
+          [(ngModel)]="employee.phoneNumber"
+          [required]="employee.contactPreference === 'phone'"
+          pattern="^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$"
+          #phoneNumber="ngModel"
+          [class.is-invalid]="phoneNumber.invalid"
+          [class.is-valid]="phoneNumber.valid && phoneNumber.touched"
+        />
 
-          <div class="mb-3">
-            <button (click)="togglePhotoPreview()" type="button" class="btn btn-primary">
-              {{previewPhoto ? 'Hide Photo' : 'Show Photo'}}
-            </button>
-          </div>
+        <span
+          class="invalid-feedback d-block"
+          *ngIf="phoneNumber.errors?.['required']"
+        >
+          Phone number is required
+        </span>
 
-          @if(previewPhoto && photoPath) {
-            <div class="mb-3">
-              <img alt="Foto" [src]="photoPath" class="imageClass" height="200" width="200"/>
-            </div>
-          }@else if (photoPath == null && previewPhoto) {
-            <div class="mb-3">
-              <p>No Photo Selected</p>
-            </div>
+        <span
+          class="invalid-feedback d-block"
+          *ngIf="phoneNumber.errors?.['pattern'] && phoneNumber.touched"
+        >
+          Phone number is invalid
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <label for="M" class="form-label">Gender</label>
+        <div
+          class="form-control"
+          [class.is-invalid]="gender.invalid && gender.touched"
+        >
+          <label class="me-4">
+            <input
+              type="radio"
+              value="male"
+              name="gender"
+              [(ngModel)]="employee.gender"
+              required
+              #gender="ngModel"
+            />
+            Male
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="famale"
+              name="gender"
+              [(ngModel)]="employee.gender"
+              required
+              #gender="ngModel"
+            />
+            Famale
+          </label>
+        </div>
+
+        <span
+          class="invalid-feedback d-block"
+          *ngIf="gender.errors?.['required'] && gender.touched"
+        >
+          Gender is required
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <div
+          class="form-control"
+          [class.is-invalid]="isActive.invalid && isActive.touched"
+        >
+          <label class="form-check-inline">
+            <input
+              type="checkbox"
+              value="isActive"
+              name="isActive"
+              [(ngModel)]="employee.isActive"
+              [required]="employee.isActive === null"
+              #isActive="ngModel"
+            />
+            Is Active
+          </label>
+        </div>
+        <span
+          class="invalid-feedback d-block"
+          *ngIf="isActive.errors?.['required'] && isActive.touched"
+        >
+          Is active is required
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <label for="department"> Department </label>
+        <select
+          id="department"
+          name="department"
+          [(ngModel)]="employee.department"
+          class="form-control"
+          required
+          #department="ngModel"
+          [class.is-invalid]="department.invalid && department.touched && department.errors?.['required']"
+          pattern="^[1-9]+$"
+        >
+          <option value="-1">Select Department</option>
+          @for(dep of departments; track $index) {
+          <option value="{{ dep.id }}">{{ dep.name }}</option>
           }
+        </select>
+        <span
+          class="invalid-feedback d-block"
+          *ngIf="department.errors?.['required'] && department.touched"
+        >
+          Department is required
+        </span>
+      </div>
 
+      <div class="row">
+        <div class="mb-3 col-md-5">
+          <label for="phoneNumber" class="form-label">Date of Birth</label>
+          <input
+            type="Date"
+            bsDatepicker
+            name="dateOfBirth"
+            class="form-control"
+            id="dateOfBirth"
+            [(ngModel)]="employee.dateOfBirth"
+            placeholder="dd/MM/yyyy"
+          />
+        </div>
       </div>
-      <div class="card-footer" >
-        <button type="submit" class="btn btn-primary"
-        [disabled]="employeeForm.invalid">
-          Save
-      </button>
+
+      <div class="mb-3 col-md-4">
+        <label for="photoPath" class="form-label">Photo Path</label>
+        <input
+          type="file"
+          accept="image/*"
+          name="photoPath"
+          class="form-control"
+          id="photoPath"
+          [(ngModel)]="employee.photoPath"
+        />
       </div>
+
+      <div class="mb-3">
+        <button
+          (click)="togglePhotoPreview()"
+          type="button"
+          class="btn btn-primary"
+        >
+          {{ previewPhoto ? "Hide " : "Show " }} Photo
+        </button>
+      </div>
+
+      @if(previewPhoto && photoPath) {
+      <div class="mb-3">
+        <img
+          alt="Foto"
+          [src]="employee.photoPath"
+          class="imageClass"
+          height="200"
+          width="200"
+        />
+      </div>
+      }@else if (photoPath == null && previewPhoto) {
+      <div class="mb-3">
+        <p>No Photo Selected</p>
+      </div>
+      }
     </div>
-
+    <div class="card-footer">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="employeeForm.invalid"
+      >
+        Save
+      </button>
+    </div>
+  </div>
 </form>
 
-{{employeeForm.value | json}}
+{{ employeeForm.value | json }}

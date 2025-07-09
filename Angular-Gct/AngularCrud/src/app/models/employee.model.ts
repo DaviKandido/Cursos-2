@@ -1,12 +1,12 @@
 export class Employee {
-  id!: number;
-  name!: string;
-  gender!: string;
-  email?: string;
-  phoneNumber?: number;
-  contactPreference!: string;
-  dateOfBirth!: Date;
-  department!: string;
-  isActive!: boolean;
-  photoPath?: string;
+  id!: number | null;
+  name!: string | null;
+  gender!: string | null;
+  email?: string | null;
+  phoneNumber?: number | null;
+  contactPreference!: string | null;
+  dateOfBirth!: Date | null;
+  department!: string | null;
+  isActive!: boolean | null;
+  photoPath?: string | null;
 }
