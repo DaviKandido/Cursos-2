@@ -202,22 +202,21 @@
         <label for="department"> Department </label>
         <select
           id="department"
-          name="department"
+          appSelectValidator="select"
           [(ngModel)]="employee.department"
+          name="department"
           class="form-control"
-          required
           #department="ngModel"
-          [class.is-invalid]="department.invalid && department.touched && department.errors?.['required']"
-          pattern="^[1-9]+$"
+          [class.is-invalid]="department.invalid && department.touched"
         >
-          <option value="-1">Select Department</option>
+          <option value="select" disabled>Select Department</option>
           @for(dep of departments; track $index) {
           <option value="{{ dep.id }}">{{ dep.name }}</option>
           }
         </select>
         <span
           class="invalid-feedback d-block"
-          *ngIf="department.errors?.['required'] && department.touched"
+          *ngIf="department.errors?.['defaultSelected'] && department.touched"
         >
           Department is required
         </span>
@@ -237,6 +236,51 @@
           />
         </div>
       </div>
+
+      <div ngModelGroup="passwordGroup">
+
+        <div class="mb-3 has-validation">
+          <label for="password" class="form-label">Password</label>
+        <input
+          type="text"
+          class="form-control"
+          name="password"
+          id="password"
+          [(ngModel)]="employee.password"
+          placeholder="Digit your password"
+          required
+          #password="ngModel"
+          [class.is-invalid]="password.invalid && password.touched"
+          [class.is-valid]="password.valid && password.touched"
+        />
+        <span class="invalid-feedback" *ngIf="password.errors?.['required']">
+          Password is required
+        </span>
+      </div>
+
+      <div class="mb-3 has-validation">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <input
+          type="text"
+          class="form-control"
+          id="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          placeholder="Digit your confirming password"
+          required
+          #confirmPassword="ngModel"
+          [class.is-invalid]="confirmPassword.invalid && confirmPassword.touched"
+          [class.is-valid]="confirmPassword.valid && confirmPassword.touched"
+          appConfirmEqualValidator="password"
+          />
+          <span
+          class="invalid-feedback"
+          *ngIf="confirmPassword.errors?.['notEqual'] && confirmPassword.touched && !confirmPassword.errors?.['required']"
+        >
+          Confirm Password is required
+        </span>
+      </div>
+
+    </div>
 
       <div class="mb-3 col-md-4">
         <label for="photoPath" class="form-label">Photo Path</label>

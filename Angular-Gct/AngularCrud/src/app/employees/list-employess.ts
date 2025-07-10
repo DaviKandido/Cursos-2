@@ -18,7 +18,8 @@
         dateOfBirth: new Date('10/25/1988'),
         department: 'IT',
         isActive: true,
-        photoPath: '/assets/imgs/john.png'
+        photoPath: '/assets/imgs/john.png',
+        password: 'test'
       },
       {
         id: 2,
@@ -29,7 +30,8 @@
         dateOfBirth: new Date('11/20/1979'),
         department: 'HR',
         isActive: true,
-        photoPath: '/assets/imgs/mary.png'
+        photoPath: '/assets/imgs/mary.png',
+        password: 'test'
       },
       {
       id: 3,
@@ -40,7 +42,8 @@
         dateOfBirth: new Date('11/20/1979'),
         department: 'HR',
         isActive: true,
-        photoPath: '/assets/imgs/mark.png'
+        photoPath: '/assets/imgs/mark.png',
+        password: 'test'
       }
 
     ]

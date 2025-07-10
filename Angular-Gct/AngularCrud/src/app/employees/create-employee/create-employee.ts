@@ -3,9 +3,17 @@ import { CommonModule, JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Department } from '../../models/department.model';
+import { ConfirmEqualValidatorDirective } from '../../shared/confirm-equal-validator.directive';
+import { SelectRequiredValidatorDirective } from '../../shared/select-required-validator.directive';
 
 @Component({
-  imports: [FormsModule, JsonPipe, CommonModule],
+  imports: [
+    FormsModule,
+    JsonPipe,
+    CommonModule,
+    ConfirmEqualValidatorDirective,
+    SelectRequiredValidatorDirective,
+  ],
   selector: 'app-create-employee',
   templateUrl: './create-employee.html',
   styleUrl: './create-employee.scss',
@@ -16,9 +24,11 @@ export class CreateEmployee {
   phoneNumber!: string;
   contactPreference!: string;
   isActive!: boolean;
-  department!: "-1";
+  department!: string;
   dateOfBirth!: Date;
   photoPath!: File;
+  password!: string;
+  confirmPassword!: string;
 
   employee: Employee = {
     id: null,
@@ -27,9 +37,10 @@ export class CreateEmployee {
     contactPreference: null,
     email: null,
     dateOfBirth: null,
-    department: null,
+    department: '-1',
     isActive: null,
     photoPath: null,
+    password: null,
   };
 
   previewPhoto: boolean = false;
@@ -53,6 +64,7 @@ export class CreateEmployee {
       department: null,
       isActive: null,
       photoPath: null,
+      password: null,
     };
   }
 

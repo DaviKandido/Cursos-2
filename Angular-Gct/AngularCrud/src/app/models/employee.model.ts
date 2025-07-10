@@ -9,4 +9,5 @@ export class Employee {
   department!: string | null;
   isActive!: boolean | null;
   photoPath?: string | null;
+  password!: string | null;
 }
