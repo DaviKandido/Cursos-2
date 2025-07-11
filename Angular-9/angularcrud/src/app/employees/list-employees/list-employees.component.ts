@@ -17,7 +17,7 @@ export class ListEmployeesComponent implements OnInit {
       dateOfBirth: new Date('10/25/1988'),
       department: 'IT',
       isActive: true,
-      photoPath: '/assets/imgs/john.png',
+      photoPath: 'assets/images/john.png',
       password: 'test',
     },
     {
@@ -29,7 +29,7 @@ export class ListEmployeesComponent implements OnInit {
       dateOfBirth: new Date('11/20/1979'),
       department: 'HR',
       isActive: true,
-      photoPath: '/assets/imgs/mary.png',
+      photoPath: 'assets/images/mary.png',
       password: 'test',
     },
     {
@@ -41,7 +41,7 @@ export class ListEmployeesComponent implements OnInit {
       dateOfBirth: new Date('11/20/1979'),
       department: 'HR',
       isActive: true,
-      photoPath: '/assets/imgs/mark.png',
+      photoPath: 'assets/images/mark.png',
       password: 'test',
     },
   ];
