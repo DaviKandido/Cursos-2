@@ -10,4 +10,5 @@ export class Employee {
   isActive!: boolean | null;
   photoPath?: string | null;
   password!: string | null;
+  confirmPassword?: string | null;
 }

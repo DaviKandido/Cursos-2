@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Department } from 'src/app/models/department.model';
 import { Employee } from 'src/app/models/employee.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { Router } from '@angular/router';
+import { EmployeeService } from '../employee.service';
 
 
 @Component({
@@ -12,7 +14,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 export class CreateEmployeeComponent implements OnInit {
   datepickerConfig: Partial<BsDatepickerConfig>;
 
-  constructor() {
+  constructor(private _employeeService: EmployeeService, private _router: Router ) {
     this.datepickerConfig = Object.assign({},
       {
         containerClass: 'theme-dark-blue',
@@ -20,6 +22,8 @@ export class CreateEmployeeComponent implements OnInit {
       }
     );
   }
+
+  confirmPassword: string = '';
 
   employee: Employee = {
     id: null,
@@ -33,6 +37,7 @@ export class CreateEmployeeComponent implements OnInit {
     isActive: null,
     photoPath: null,
     password: null,
+    confirmPassword: null,
   };
 
   previewPhoto: boolean = false;
@@ -45,21 +50,9 @@ export class CreateEmployeeComponent implements OnInit {
   ];
   fullName: any;
 
-  saveEmployee(newEmployee: Employee) {
-    console.log(newEmployee);
-    this.employee = {
-      id: null,
-      name: null,
-      gender: null,
-      contactPreference: null,
-      email: null,
-      phoneNumber: null,
-      dateOfBirth: null,
-      department: null,
-      isActive: null,
-      photoPath: null,
-      password: null,
-    };
+  saveEmployee(): void {
+    this._employeeService.save(this.employee);
+    this._router.navigate(['list']);
   }
 
   togglePhotoPreview() {

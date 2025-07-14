@@ -41,6 +41,7 @@ export class CreateEmployee {
     isActive: null,
     photoPath: null,
     password: null,
+    confirmPassword: null,
   };
 
   previewPhoto: boolean = false;
@@ -65,6 +66,7 @@ export class CreateEmployee {
       isActive: null,
       photoPath: null,
       password: null,
+      confirmPassword: null,
     };
   }
 
