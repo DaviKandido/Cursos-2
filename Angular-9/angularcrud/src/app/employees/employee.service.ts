@@ -5,7 +5,6 @@ import { Employee } from '../models/employee.model';
   providedIn: 'root',
 })
 export class EmployeeService {
-
   private listEmployees: Employee[] = [
     {
       id: 1,
@@ -33,7 +32,7 @@ export class EmployeeService {
     },
     {
       id: 3,
-      name: 'mark',
+      name: 'Mark',
       gender: 'Male',
       contactPreference: 'Phone',
       phoneNumber: 234597,
@@ -45,11 +44,15 @@ export class EmployeeService {
     },
   ];
 
-  getEmployees(): Employee[]{
+  getEmployees(): Employee[] {
     return this.listEmployees;
   }
 
-  save(Employee: Employee):void {
+  getEmployee(id: number): Employee {
+    return this.listEmployees.find((p) => p.id === id);
+  }
+
+  save(Employee: Employee): void {
     this.listEmployees.push(Employee);
   }
 

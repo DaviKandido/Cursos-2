@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Department } from 'src/app/models/department.model';
 import { Employee } from 'src/app/models/employee.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../employee.service';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -13,6 +14,8 @@ import { EmployeeService } from '../employee.service';
 })
 export class CreateEmployeeComponent implements OnInit {
   datepickerConfig: Partial<BsDatepickerConfig>;
+
+  @ViewChild('employeeForm') public CreateEmployeeForm: NgForm
 
   constructor(private _employeeService: EmployeeService, private _router: Router ) {
     this.datepickerConfig = Object.assign({},
