@@ -1,0 +1,107 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Swagger with Express",
+    "description": "Essa api tem como objetivo demonstra o uso do swagger com express",
+    "version": "1.0.0",
+    "license": {
+      "name": "MIT"
+    },
+    "termsOfService": "http://localhost:3000/terms/",
+    "contact": {
+      "name": "Davi Cândido",
+      "email": "davicandidopucminas@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/v1",
+      "description": "Ambiente de desenvolvimento"
+    },
+    {
+      "url": "https://www.crudJourney.com/v2",
+      "description": "Ambiente de produção"
+    }
+  ],
+  "paths": {
+    "/posts": {
+      "get": {
+        "summary": "Retorna todos os posts",
+        "description": "Essa rota será responsável por retorna todos os posts",
+        "tags": ["Posts"],
+        "responses": {
+          "200": {
+            "description": "Retorna todos os posts"
+          },
+          "404": {
+            "description": "Nenhum post foi encontrado"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um post",
+        "description": "Essa rota cria um post",
+        "tags": ["Posts"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              },
+              "examples": {
+                "post": {
+                  "value": {
+                    "title": "Post 1",
+                    "content": "Conteudo do post 1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Post criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Post created successfully",
+                    "post": {
+                      "id": 1,
+                      "title": "Post 1",
+                      "content": "Conteudo do post 1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados incorretos ou incompletos"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Post": {
+        "type": "object",
+        "required": ["title", "content"],
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
