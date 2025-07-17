@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Department } from 'src/app/models/department.model';
 import { Employee } from 'src/app/models/employee.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../employee.service';
 import { NgForm } from '@angular/forms';
 
@@ -14,11 +14,17 @@ import { NgForm } from '@angular/forms';
 })
 export class CreateEmployeeComponent implements OnInit {
   datepickerConfig: Partial<BsDatepickerConfig>;
+  panelTitle: string;
 
-  @ViewChild('employeeForm') public CreateEmployeeForm: NgForm
+  @ViewChild('employeeForm') public CreateEmployeeForm: NgForm;
 
-  constructor(private _employeeService: EmployeeService, private _router: Router ) {
-    this.datepickerConfig = Object.assign({},
+  constructor(
+    private _employeeService: EmployeeService,
+    private _router: Router,
+    private _route: ActivatedRoute
+  ) {
+    this.datepickerConfig = Object.assign(
+      {},
       {
         containerClass: 'theme-dark-blue',
         showWeekNumbers: false,
@@ -54,7 +60,9 @@ export class CreateEmployeeComponent implements OnInit {
   fullName: any;
 
   saveEmployee(): void {
-    this._employeeService.save(this.employee);
+    const EmployeeCopy: Employee = Object.assign({}, this.employee);
+    this._employeeService.save(EmployeeCopy); // this._employeeService.save(this.employee);
+    this.CreateEmployeeForm.reset();
     this._router.navigate(['list']);
   }
 
@@ -62,5 +70,36 @@ export class CreateEmployeeComponent implements OnInit {
     this.previewPhoto = !this.previewPhoto;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._route.paramMap.subscribe((parameterMap) => {
+      const id = +parameterMap.get('id');
+      this.getEmployee(id);
+    });
+  }
+
+  getEmployee(id: number) {
+    if (id === 0) {
+      this.employee = {
+        id: null,
+        name: null,
+        gender: null,
+        contactPreference: null,
+        phoneNumber: null,
+        email: null,
+        dateOfBirth: null,
+        department: '-1',
+        isActive: null,
+        photoPath: null,
+        password: null,
+        confirmPassword: null,
+      };
+      this.CreateEmployeeForm.reset();
+      this.panelTitle = 'Create'
+    } else {
+      this._employeeService
+        .getEmployee(id)
+        .subscribe((employee) => (this.employee = Object.assign({}, employee)));
+        this.panelTitle = 'Update';
+    }
+  }
 }

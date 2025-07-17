@@ -1,11 +1,12 @@
 <form
   #employeeForm="ngForm"
   ngNativeValidate
-  (ngSubmit)="saveEmployee()"
+  (ngSubmit)="saveEmployee();"
+
 >
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h3 class="panel-title">Create Employee</h3>
+      <h3 class="panel-title">{{panelTitle}} Employee</h3>
     </div>
     <div class="panel-body">
       <div
@@ -50,7 +51,7 @@
             <input
               id="contactPreference"
               type="radio"
-              value="email"
+              value="Email"
               name="contactPreference"
               [(ngModel)]="employee.contactPreference"
               required
@@ -62,7 +63,7 @@
             <input
               id="contactPreference"
               type="radio"
-              value="phone"
+              value="Phone"
               name="contactPreference"
               [(ngModel)]="employee.contactPreference"
               required
@@ -84,7 +85,7 @@
       <div
         class="form-group"
         [class.has-error]="email.invalid"
-        [class.has-success]="email.valid && contactPreference.value === 'email'"
+        [class.has-success]="email.valid && contactPreference.value === 'Email'"
       >
         <label for="email" class="control-label">Email</label>
         <input
@@ -95,12 +96,12 @@
           #email="ngModel"
           email
           type="email"
-          [required]="contactPreference.value === 'email'"
+          [required]="contactPreference.value === 'Email'"
           placeholder="Digit your email.."
         />
         <span
           class="help-block"
-          *ngIf="email.errors?.required && contactPreference.value === 'email'"
+          *ngIf="email.errors?.required && contactPreference.value === 'Email'"
         >
           Email is required
         </span>
@@ -113,7 +114,7 @@
         class="form-group"
         [class.has-error]="phoneNumber.invalid"
         [class.has-success]="
-          phoneNumber.valid && contactPreference.value === 'phone'
+          phoneNumber.valid && contactPreference.value === 'Phone'
         "
       >
         <label for="phoneNumber" class="control-label">Phone Number</label>
@@ -125,13 +126,13 @@
           type="text"
           #phoneNumber="ngModel"
           pattern="^\d{10}$"
-          [required]="contactPreference.value === 'phone'"
+          [required]="contactPreference.value === 'Phone'"
           placeholder="Digit your phone number..."
         />
         <span
           class="help-block"
           *ngIf="
-            phoneNumber.errors?.required && contactPreference.value === 'phone'
+            phoneNumber.errors?.required && contactPreference.value === 'Phone'
           "
         >
           Phone Number is required
@@ -151,7 +152,7 @@
           <label for="gender" class="radio-inline control-label">
             <input
               type="radio"
-              value="male"
+              value="Male"
               name="gender"
               [(ngModel)]="employee.gender"
               #gender="ngModel"
@@ -162,7 +163,7 @@
           <label for="gender" class="radio-inline">
             <input
               type="radio"
-              value="famale"
+              value="Female"
               name="gender"
               [(ngModel)]="employee.gender"
               #gender="ngModel"
@@ -260,6 +261,7 @@
           (click)="togglePhotoPreview()"
           class="btn btn-primary"
           type="button"
+          *ngIf="employee.photoPath !== '' && employee.photoPath !== null"
         >
           {{ previewPhoto ? "Hide" : "Show" }} Preview
         </button>
@@ -270,6 +272,7 @@
           alt="You perfil image"
           height="200"
           width="200"
+          *ngIf="employee.photoPath !== '' && employee.photoPath !== null"
         />
       </div>
 

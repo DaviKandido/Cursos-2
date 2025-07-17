@@ -9,3 +9,7 @@
 
   justify-content: baseline;
 }
+
+.pointerCursor{
+  cursor: pointer;
+}

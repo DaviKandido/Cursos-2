@@ -15,19 +15,32 @@ import { EmployeeService } from './employees/employee.service';
 import { DisplayEmployeeComponent } from './employees/display-employee/display-employee.component';
 import { EmployeeDetailsComponent } from './employees/employee-details/employee-details.component';
 import { CreateEmployeeCanDeactiveGuardService } from './employees/create-employee-can-deactive-guard.service';
+import { EmployeeFilterPipe } from './employees/employee-filter.pipe';
+import { EmployeeListResolverService } from './employees/employee-list-resolver.service';
+import { PageNotFoundComponent } from './pageNotFound/page-not-found/page-not-found.component';
+import { EmployeeDetailsGuardServiceService } from './employees/employee-details-guard-service.service';
+import { EmployeeOneResolverService } from './employees/employee-one-resolve.service';
+import { AccordionComponent } from './shared/accordion/accordion.component';
 
 const appRoutes: Routes = [
-  { path: 'list', component: ListEmployeesComponent },
   {
-    path: 'create',
+    path: 'list',
+    component: ListEmployeesComponent,
+    resolve: { employeeList: EmployeeListResolverService },
+  },
+  {
+    path: 'edit/:id',
     component: CreateEmployeeComponent,
     canDeactivate: [CreateEmployeeCanDeactiveGuardService],
   },
   {
     path: 'employees/:id',
     component: EmployeeDetailsComponent,
+    resolve: { employeeOne: EmployeeOneResolverService },
+    canActivate: [EmployeeDetailsGuardServiceService],
   },
   { path: '', redirectTo: '/list', pathMatch: 'full' },
+  { path: 'notFound', component: PageNotFoundComponent },
 ];
 @NgModule({
   declarations: [
@@ -39,6 +52,9 @@ const appRoutes: Routes = [
     ConfirmEqualValidatorDirective,
     DisplayEmployeeComponent,
     EmployeeDetailsComponent,
+    EmployeeFilterPipe,
+    PageNotFoundComponent,
+    AccordionComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +65,13 @@ const appRoutes: Routes = [
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [EmployeeService, CreateEmployeeCanDeactiveGuardService],
+  providers: [
+    EmployeeService,
+    CreateEmployeeCanDeactiveGuardService,
+    EmployeeListResolverService,
+    EmployeeOneResolverService,
+    EmployeeDetailsGuardServiceService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
