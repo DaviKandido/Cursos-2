@@ -6,6 +6,9 @@
 <div *ngFor="let employee of filteredEmployees">
     <app-display-employee [employee]="employee" [searchTerm]="searchTerm" (noifyDelete)="onDeleteNotification($event)"></app-display-employee>
 </div>
+<div *ngIf="error">
+  {{ error }}
+</div>
 
 <!-- TESTE DE FILTRAGEM POR PIPE -> PIPES IMPUROS CAUSAM PROBLEMAS DE DESEMPENHO -->
 <!-- <div *ngFor="let employee of employees | employeeFilter:searchTerm">

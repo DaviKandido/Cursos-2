@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../employee.service';
 import { NgForm } from '@angular/forms';
 
-
 @Component({
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
@@ -60,10 +59,27 @@ export class CreateEmployeeComponent implements OnInit {
   fullName: any;
 
   saveEmployee(): void {
-    const EmployeeCopy: Employee = Object.assign({}, this.employee);
-    this._employeeService.save(EmployeeCopy); // this._employeeService.save(this.employee);
-    this.CreateEmployeeForm.reset();
-    this._router.navigate(['list']);
+    if(this.employee.id == null){
+      this._employeeService.saveEmployee(this.employee).subscribe(
+        (data: Employee) => {
+          console.log(data);
+          this.CreateEmployeeForm.reset();
+          this._router.navigate(['list']);
+        },
+        (error: any) => console.log(error)
+      );
+    }else{
+      this._employeeService.updateEmployee(this.employee).subscribe(
+        () => {
+          this.CreateEmployeeForm.reset();
+          this._router.navigate(['list']);
+        },
+        (error: any) => console.log(error)
+      );
+
+    }
+
+    // this._employeeService.save(this.employee);
   }
 
   togglePhotoPreview() {
@@ -94,12 +110,13 @@ export class CreateEmployeeComponent implements OnInit {
         confirmPassword: null,
       };
       this.CreateEmployeeForm.reset();
-      this.panelTitle = 'Create'
+      this.panelTitle = 'Create';
     } else {
-      this._employeeService
-        .getEmployee(id)
-        .subscribe((employee) => (this.employee = Object.assign({}, employee)));
-        this.panelTitle = 'Update';
+      this._employeeService.getEmployee(id).subscribe(
+        (employee) => (this.employee = employee),
+        (erro: any) => console.log(erro)
+      );
+      this.panelTitle = 'Update';
     }
   }
 }

@@ -39,8 +39,11 @@ export class DisplayEmployeeComponent implements OnInit {
   }
 
   deleteEmployee(): void {
-    this._employeeService.deleteEmployee(this.employee.id);
-    this.noifyDelete.emit(this.employee.id);
+    this._employeeService.deleteEmployee(this.employee.id).subscribe(() => {
+      this.noifyDelete.emit(this.employee.id);
+    },
+    (err) => console.log(err)
+  );
   }
 
   // @Output() notify: EventEmitter<Employee> = new EventEmitter<Employee>();
