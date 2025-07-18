@@ -22,7 +22,7 @@ export class EmployeeDetailsComponent implements OnInit {
   ngOnInit(): void {
     this._route.paramMap.subscribe((params) => {
       this._employeeService.getEmployees().subscribe((employeeValue) => {
-        this._id = +params.get('id') % employeeValue.length;
+        this._id = +params.get('id') % employeeValue.length + 1;
         this._employeeService
           .getEmployee(this._id)
           .subscribe((employee) => (this.employee = employee));

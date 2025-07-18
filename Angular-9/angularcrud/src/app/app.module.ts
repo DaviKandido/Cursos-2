@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -62,6 +63,7 @@ const appRoutes: Routes = [
     RouterModule,
     FormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot(appRoutes),
   ],
@@ -70,7 +72,7 @@ const appRoutes: Routes = [
     CreateEmployeeCanDeactiveGuardService,
     EmployeeListResolverService,
     EmployeeOneResolverService,
-    EmployeeDetailsGuardServiceService
+    EmployeeDetailsGuardServiceService,
   ],
   bootstrap: [AppComponent],
 })
